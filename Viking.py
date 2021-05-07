@@ -5,7 +5,7 @@ import aiwolfpy.contentbuilder as cb
 import logging, json
 from random import randint
 
-#Importing villager
+#Importing different characters
 from villager import *
 from werewolf import *
 
@@ -69,60 +69,6 @@ class SampleAgent(object):
 
 
 
-        # logging.debug("# UPDATE")
-        # self.dani=self.dani + 1
-        # # At the beginning of the day, reduce score of dead players
-        # if (request == "DAILY_INITIALIZE"):
-        #     for i in range(self.player_total):
-        #         if (base_info["statusMap"][str(i+1)] == "DEAD"):
-        #             self.player_score[i] -= 10000
-
-        # # Check each line in Diff Data for talks or votes
-        # # logging.debug(diff_data)
-
-        
-
-        # for row in diff_data.itertuples():
-        #     type = getattr(row,"type")
-        #     text = getattr(row,"text")
-        #     if (type == "vote"):
-        #         voter = getattr(row,"idx")
-        #         target = getattr(row,"agent")
-        #         if target == self.myid:
-        #             # They voted for me!
-        #             logging.debug("Agent {} voted for me!".format(voter))
-        #             self.player_score[voter-1] += 100
-        #     elif (type == "talk" and "[{:02d}]".format(self.myid) in text):
-        #         # they are talking about me
-        #         source = getattr(row,"agent")
-        #         logging.debug("Talking about me: {}".format(text))
-
-        #         if "WEREWOLF" in text or "VOTE" in text:
-        #             # Are you calling me a werewolf!?
-        #             # Are you threateningto vote me?
-        #             self.player_score[source-1] += 10
-        #         else:
-        #             # Stop talking about me!
-        #             self.player_score[source-1] += 1
-        #     # Checking subsequence of string to determine if real seer exists
-        #     if(type == "talk"):
-        #         str1 ="COMINGOUT Agent SEER"
-        #         str2 =  text
-        #         m = len(str1)
-        #         n = len(text)
-        #         j = 0 
-        #         i = 0 
-        #         while j < m and i < n:
-        #             if str1[j] == str2[i]:
-        #                 j = j+1
-        #             i = i + 1
-        #         if(j == m):
-        #             #An agent is coming out as seer
-        #             logging.debug("Seer is talking about himself: {}".format(text))
-        #             seeridx = getattr(row,"agent")
-        #             # Give the seer 10 hate points
-        #             self.player_score[seeridx - 1] += 10
-
 
         # Print Current Hate list:
         self.hate = self.player_score.index(max(self.player_score)) + 1
@@ -144,33 +90,10 @@ class SampleAgent(object):
         elif(self.myrole == "WEREWOLF"):
             return werewolf_talk(self.hate)
 
-        #Here the wolf will firstly say that he is a seer 
-        #and after that he will try to prove that the agent he hates
-        #the most is a werewolf
-        # hatecycle = ["COMINGOUT Agent[{:02d}] SEER",
-        # "REQUEST ANY (VOTE Agent[{:02d}])",
-        # "ESTIMATE Agent[{:02d}] WEREWOLF",
-        # "VOTE Agent[{:02d}]",
-        # "DIVINED Agent[{:02d}] WEREWOLF"
-        # ]
-        # # hatecycle=["INQUIRE Agent[{:02d}] (VOTED ANY)"]
+        else:
+            return normal_talk(self.hate)
 
-        # # I will also try to eliminate the real seer if he exists in the game
-        # if(self.dani == 0):
-        #     # The werewolf declares himself as seer first
-        #     return hatecycle[0].format(self.myid)
-        # else:
-        #     # After declaring himself as seer he will try to eliminate the seer/hated player
-        #     return hatecycle[randint(1,4)].format(self.hate)    
-
-             # I will also try to eliminate the real seer if he exists in the game
-        # if(self.dani == 0):
-        #     # The werewolf declares himself as seer first
-        #     return hatecycle[0].format(self.myid)
-        # else:
-        #     # After declaring himself as seer he will try to eliminate the seer/hated player
-        #     return hatecycle[0].format(self.hate)
-        #return villager_talk()
+       
 
     def whisper(self):
         logging.debug("# WHISPER")
