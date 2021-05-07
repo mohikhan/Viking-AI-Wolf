@@ -7,6 +7,7 @@ from random import randint
 
 #Importing villager
 from villager import *
+from werewolf import *
 
 
 myname = 'Viking'
@@ -60,8 +61,11 @@ class SampleAgent(object):
     # new information (no return)
     def update(self, base_info, diff_data, request):
         if(self.myrole == "VILLAGER"):
-            logging.debug("Villager Update")
+            # logging.debug("Villager Update")
             villager_update(base_info,diff_data,request,self.player_total,self.player_score,self.myid)
+        
+        elif(self.myrole == "WEREWOLF"):
+            werewolf_update(base_info,diff_data,request,self.player_total,self.player_score,self.myid)
 
 
 
@@ -127,7 +131,6 @@ class SampleAgent(object):
     
     # Start of the day (no return)
     def dayStart(self):
-        self.dani=-1
         logging.debug("# DAYSTART")
         return None
 
@@ -135,26 +138,30 @@ class SampleAgent(object):
     # protocol string as the return.
     def talk(self):
         logging.debug("# TALK")
-       
+        if(self.myrole == "VILLAGER"):
+            return villager_talk(self.hate)
+        
+        elif(self.myrole == "WEREWOLF"):
+            return werewolf_talk(self.hate)
 
         #Here the wolf will firstly say that he is a seer 
         #and after that he will try to prove that the agent he hates
         #the most is a werewolf
-        hatecycle = ["COMINGOUT Agent[{:02d}] SEER",
-        "REQUEST ANY (VOTE Agent[{:02d}])",
-        "ESTIMATE Agent[{:02d}] WEREWOLF",
-        "VOTE Agent[{:02d}]",
-        "DIVINED Agent[{:02d}] WEREWOLF"
-        ]
-        # hatecycle=["INQUIRE Agent[{:02d}] (VOTED ANY)"]
+        # hatecycle = ["COMINGOUT Agent[{:02d}] SEER",
+        # "REQUEST ANY (VOTE Agent[{:02d}])",
+        # "ESTIMATE Agent[{:02d}] WEREWOLF",
+        # "VOTE Agent[{:02d}]",
+        # "DIVINED Agent[{:02d}] WEREWOLF"
+        # ]
+        # # hatecycle=["INQUIRE Agent[{:02d}] (VOTED ANY)"]
 
-        # I will also try to eliminate the real seer if he exists in the game
-        if(self.dani == 0):
-            # The werewolf declares himself as seer first
-            return hatecycle[0].format(self.myid)
-        else:
-            # After declaring himself as seer he will try to eliminate the seer/hated player
-            return hatecycle[randint(1,4)].format(self.hate)    
+        # # I will also try to eliminate the real seer if he exists in the game
+        # if(self.dani == 0):
+        #     # The werewolf declares himself as seer first
+        #     return hatecycle[0].format(self.myid)
+        # else:
+        #     # After declaring himself as seer he will try to eliminate the seer/hated player
+        #     return hatecycle[randint(1,4)].format(self.hate)    
 
              # I will also try to eliminate the real seer if he exists in the game
         # if(self.dani == 0):
@@ -163,6 +170,7 @@ class SampleAgent(object):
         # else:
         #     # After declaring himself as seer he will try to eliminate the seer/hated player
         #     return hatecycle[0].format(self.hate)
+        #return villager_talk()
 
     def whisper(self):
         logging.debug("# WHISPER")
