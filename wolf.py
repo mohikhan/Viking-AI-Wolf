@@ -1,5 +1,4 @@
 #Werewolf agent made taking inspiration from the OMGUS agent
-
 from __future__ import print_function, division
 import aiwolfpy
 import aiwolfpy.contentbuilder as cb
@@ -7,7 +6,7 @@ import logging, json
 from random import randint
 
 
-myname = 'wolf{:02d}'.format(randint(0,99))
+myname = 'Viking'
 
 class SampleAgent(object):
     def __init__(self, agent_name):
@@ -18,35 +17,22 @@ class SampleAgent(object):
     def getName(self):
         return self.myname
     
-    
-        # # Function to check subsequence
-        # def isSubSequence(str1, str2):
-
-        #     m = len(str1)
-        #     n = len(str2)
-
-        #     j = 0 
-        #     i = 0 
-        #     while j < m and i < n:
-        #         if str1[j] == str2[i]:
-        #             j = j+1
-        #         i = i + 1
-
-        #     return j == m
-
 
     def initialize(self, base_info, diff_data, game_setting):
         # New game init:
         # Store my own ID:
+        self.myrol = base_info["myRole"]
         self.myid = base_info["agentIdx"]
         self.dani=0
         logging.debug("# INIT: I am agent {}".format(self.myid))
+        logging.debug("# INIT: I am playing the role of {}".format(self.myrol))
         self.player_total = game_setting["playerNum"]
-
+        #logging.debug("My role is {}".format(self.myRole))
         # Initialize a list with the hate score for each player
         # Also reduce own-hate score by 10k
         self.player_score = [0]*self.player_total
         self.player_score[self.myid-1] = -10000
+        #
         self.dani=0
         # the hate attribute contains the player ID that I hate the most.
         self.hate = self.player_score.index(max(self.player_score)) + 1
@@ -63,8 +49,6 @@ class SampleAgent(object):
     def divine(self):
         logging.debug("# DIVINE: "+str(self.hate))
         return self.hate
-
-
 
     # new information (no return)
     def update(self, base_info, diff_data, request):
@@ -100,6 +84,7 @@ class SampleAgent(object):
                 else:
                     # Stop talking about me!
                     self.player_score[source-1] += 1
+            # Checking subsequence of string to determine if real seer exists
             if(type == "talk"):
                 str1 ="COMINGOUT Agent SEER"
                 str2 =  text
@@ -112,9 +97,10 @@ class SampleAgent(object):
                         j = j+1
                     i = i + 1
                 if(j == m):
-
+                    #An agent is coming out as seer
                     logging.debug("Seer is talking about himself: {}".format(text))
                     seeridx = getattr(row,"agent")
+                    # Give the seer 10 hate points
                     self.player_score[seeridx - 1] += 10
 
 
@@ -136,20 +122,31 @@ class SampleAgent(object):
        
 
         #Here the wolf will firstly say that he is a seer 
-        # and after that he will try to prove that the agent he hates
-        # the most is a werewolf
+        #and after that he will try to prove that the agent he hates
+        #the most is a werewolf
         hatecycle = ["COMINGOUT Agent[{:02d}] SEER",
         "REQUEST ANY (VOTE Agent[{:02d}])",
         "ESTIMATE Agent[{:02d}] WEREWOLF",
-        "VOTE Agent[{:02d}]","DIVINED Agent[{:02d}] WEREWOLF"
+        "VOTE Agent[{:02d}]",
+        "DIVINED Agent[{:02d}] WEREWOLF"
         ]
+        # hatecycle=["INQUIRE Agent[{:02d}] (VOTED ANY)"]
+
         # I will also try to eliminate the real seer if he exists in the game
-  
-        
         if(self.dani == 0):
+            # The werewolf declares himself as seer first
             return hatecycle[0].format(self.myid)
         else:
+            # After declaring himself as seer he will try to eliminate the seer/hated player
             return hatecycle[randint(1,4)].format(self.hate)    
+
+             # I will also try to eliminate the real seer if he exists in the game
+        # if(self.dani == 0):
+        #     # The werewolf declares himself as seer first
+        #     return hatecycle[0].format(self.myid)
+        # else:
+        #     # After declaring himself as seer he will try to eliminate the seer/hated player
+        #     return hatecycle[0].format(self.hate)
 
     def whisper(self):
         logging.debug("# WHISPER")
