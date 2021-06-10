@@ -1,4 +1,6 @@
 
+#Script file
+
 from __future__ import print_function, division
 import aiwolfpy
 import aiwolfpy.contentbuilder as cb
