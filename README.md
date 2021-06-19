@@ -5,5 +5,5 @@ This repo contains my agent "Viking" to play the AI Wolf  (In construction). The
 <!-- <img src="/Viking.gif" width="250" height="250"/> -->
 
 <p align="center">
-  <img width="600" height="600" src="/Viking.gif">
+  <img width="600" height="400" src="/Viking.gif">
 </p>
