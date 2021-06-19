@@ -12,6 +12,7 @@ from villager import *
 from werewolf import *
 from seer import *
 from bodyguard import *
+from medium import *
 from defaultrole import *
 
 #My agent name
@@ -98,25 +99,27 @@ class Myagent(object):
          # Day number
         self.day_no = base_info["day"]
         self.ind = self.ind + 1
+        
+        # logic if agent is villager
         if(self.myrole == "VILLAGER"):
-            # logic if agent is villager
+            
             villager_update(base_info,diff_data,request,self.player_total,self.player_score,self.myid)
         
+         # logic if agent is werewolf
         elif(self.myrole == "WEREWOLF"):
-            # logic if agent is werewolf
-           
+                      
             werewolf_update(base_info,diff_data,request,self.player_total,self.player_score,self.myid)
-
-        elif(self.myrole == "BODYGUARD"):
+        
 
         # logic if agent is bodyguard
+        elif(self.myrole == "BODYGUARD"):
+
             bodyguard_update(base_info,diff_data,request,self.player_total,self.player_score,self.myid,self.vulnerability)
     
+        # logic if agent is medium
+        elif(self.myrole == "MEDIUM"):
 
-        # elif(self.myrole == "SEER"):
-            #logic if agent is seer
-
-            # seer_update()
+            medium_update(base_info,diff_data,request,self.player_total,self.player_score,self.myid)
 
         # elif(self.myrole == "POSSESSED"):
         #     # logic if agent is werewolf
@@ -165,6 +168,9 @@ class Myagent(object):
 
         elif(self.myrole == "SEER"):
             return seer_talk(self.hate, self.day_no, self.myid, self.ind)
+
+        elif(self.myrole == "MEDIUM"):
+            return medium_talk(self.hate, self.day_no, self.myid, self.ind)
 
         else:
             return default_talk(self.hate)
