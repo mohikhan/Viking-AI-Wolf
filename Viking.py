@@ -14,6 +14,7 @@ from seer import *
 from bodyguard import *
 from medium import *
 from defaultrole import *
+from possessed import *
 
 #My agent name
 myname = 'Viking'
@@ -120,10 +121,11 @@ class Myagent(object):
         elif(self.myrole == "MEDIUM"):
 
             medium_update(base_info,diff_data,request,self.player_total,self.player_score,self.myid)
-
-        # elif(self.myrole == "POSSESSED"):
-        #     # logic if agent is werewolf
-        #     possessed_update(base_info,diff_data,request,self.player_total,self.player_score,self.myid)
+        
+        # logic if agent is possessed
+        elif(self.myrole == "POSSESSED"):
+            
+            possessed_update(base_info,diff_data,request,self.player_total,self.player_score,self.myid)
 
 
         else:
@@ -172,8 +174,14 @@ class Myagent(object):
         elif(self.myrole == "MEDIUM"):
             return medium_talk(self.hate, self.day_no, self.myid, self.ind)
 
-        else:
-            return default_talk(self.hate)
+        # Calls talk logic for possessed
+        elif(self.myrole == "POSSESSED"):
+          
+            # self.day_no = base_info["day"]
+            return possessed_talk(self.hate, self.strategy_no, self.day_no, self.myid, self.ind)
+
+        # else:
+        #     return default_talk(self.hate)
 
        
    # Whisper function for the werewolf
