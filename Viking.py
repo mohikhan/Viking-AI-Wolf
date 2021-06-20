@@ -75,9 +75,6 @@ class Myagent(object):
         #Index for talk number
         self.ind = 0
 
-        
-
-        
 
     # vote function to vote for the most hated agent.
     def vote(self):
@@ -93,6 +90,7 @@ class Myagent(object):
     def divine(self):
         logging.debug("# DIVINE: "+str(self.hate))
         return self.hate
+        # return 2
 
     # Updating informtion in the game
     def update(self, base_info, diff_data, request):
@@ -127,9 +125,10 @@ class Myagent(object):
             
             possessed_update(base_info,diff_data,request,self.player_total,self.player_score,self.myid)
 
-
+        # logic if agent is seer
         else:
-            default_update(base_info,diff_data,request,self.player_total,self.player_score,self.myid)
+            # default_update(base_info,diff_data,request,self.player_total,self.player_score,self.myid)
+            seer_update(base_info,diff_data,request,self.player_total,self.player_score,self.myid)
 
 
         # Hate score of different agents
@@ -153,35 +152,33 @@ class Myagent(object):
     def talk(self):
         logging.debug("# TALK")
 
-        #Calls talk logic for villager 
+        # Calls talk logic for VILLAGER
         if(self.myrole == "VILLAGER"):
             return villager_talk(self.hate,self.ally,self.ind)
         
-        #Calls talk logic for werewolf
+        # Calls talk logic for WEREWOLF
         elif(self.myrole == "WEREWOLF"):
           
-            # self.day_no = base_info["day"]
             return werewolf_talk(self.hate, self.strategy_no, self.day_no, self.myid, self.ind)
-
+        
+        # Calls talk logic for BODYGUARD
         elif(self.myrole == "BODYGUARD"):
           
-            # self.day_no = base_info["day"]
             return bodyguard_talk(self.hate,self.ally,self.ind)
-
+ 
+        # Calls talk logic for SEER
         elif(self.myrole == "SEER"):
             return seer_talk(self.hate, self.day_no, self.myid, self.ind)
 
+        # Calls talk logic for MEDIUM
         elif(self.myrole == "MEDIUM"):
             return medium_talk(self.hate, self.day_no, self.myid, self.ind)
 
-        # Calls talk logic for possessed
+
+        # Calls talk logic for POSSESSED
         elif(self.myrole == "POSSESSED"):
           
-            # self.day_no = base_info["day"]
             return possessed_talk(self.hate, self.strategy_no, self.day_no, self.myid, self.ind)
-
-        # else:
-        #     return default_talk(self.hate)
 
        
    # Whisper function for the werewolf
