@@ -1,6 +1,6 @@
 from Viking import *
 
-#Update function for the villager
+#Update function for the werewolf
 def werewolf_update(base_info,diff_data,request,player_total,player_score,myid):
     
     logging.debug("# WEREWOLF UPDATE")
@@ -19,12 +19,12 @@ def werewolf_update(base_info,diff_data,request,player_total,player_score,myid):
         if (type == "vote"):
             voter = getattr(row,"idx")
             target = getattr(row,"agent")
+
             # If the voter has voted for me to be a werewolf I will give him 100 hate points
             if (target == myid):
                 logging.debug("Agent {} voted for me!".format(voter))
                 player_score[voter-1] += 100
-
-        # elif(type == "talk" and )        
+      
 
         elif (type == "talk" and "[{:02d}]".format(myid) in text):
             
@@ -32,28 +32,27 @@ def werewolf_update(base_info,diff_data,request,player_total,player_score,myid):
             source = getattr(row,"agent")
             logging.debug("Sentence containing me: {}".format(text))
             
-            #Reduce the hate points for the players who think I am a human
+            # Reduce the hate points for the players who think I am a human
             if "DIVINED Agent[{:02d}] HUMAN".format(myid)  in text:
                 player_score[source - 1] -=20
 
-            #Reduce the hate points for the players who wants the bodyguard to guard me
+            # Reduce the hate points for the players who wants the bodyguard to guard me
             elif "(GUARD Agent[{:02d}])".format(myid) in text:
                 player_score[source - 1] -= 40
             
-            #Increase the hate points for the agent who divines me as a werewolf 
-            #Also this agent is guaranteed werewolf because he wrongly divines me as a werewolf as I am avillager
+            # Increase the hate points for the agent who divines me as a werewolf 
             elif "DIVINED Agent[{:02d}] WEREWOLF".format(myid)  in text:
                 player_score[source - 1] +=50 
             
-            #Reduce the hate points for the players who estimate me in the human team
+            # Reduce the hate points for the players who estimate me in the human team
             elif "ESTIMATE Agent[{:02d}] VILLAGER".format(myid) in text or "ESTIMATE Agent[{:02d}] SEER".format(myid) in text or "ESTIMATE Agent[{:02d}] MEDIUM".format(myid) in text or "ESTIMATE Agent[{:02d}] BODYGUARD".format(myid) in text:
                 player_score[source - 1] -=50 
             
-            #Increase the hate points of the players who estimate me in the werewolf team
+            # Increase the hate points of the players who estimate me in the werewolf team
             elif "ESTIMATE Agent[{:02d}] WEREWOLF".format(myid) in text or "ESTIMATE Agent[{:02d}] POSSESSED".format(myid) in text:
                 player_score[source - 1] +=50 
 
-            #Increase hate points if someone wants to vote for me or asks someone to vote for me 
+            # Increase hate points if someone wants to vote for me or asks someone to vote for me 
             elif "VOTE Agent[{:02d}]".format(myid) in text:
                 player_score[source - 1] +=70
         
@@ -65,6 +64,7 @@ def werewolf_update(base_info,diff_data,request,player_total,player_score,myid):
             if "COMINGOUT Agent[{:02d}] SEER".format(source) in text:
                 player_score[source-1] += 10
 
+# talk function for werewolf
 def werewolf_talk(hate, strategy_no, day_no, myid, ind):
 
     logging.debug("# WEREWOLF TALK")
@@ -103,21 +103,15 @@ def werewolf_talk(hate, strategy_no, day_no, myid, ind):
         else:
             return strategyone_sentences[randint(0,2)].format(hate)
 
+
     #Second strategy ##########################################  
 
     # # In this strategy I will pretend to be a normal villager and I will try to gain trust of other agents 
     elif(strategy_no == 1):
 
-        strategytwo_sentences = ["REQUEST ANY (VOTE Agent[{:02d}])","ESTIMATE Agent[{:02d}] WEREWOLF","VOTE Agent[{:02d}]"]
+        strategytwo_sentences = ["REQUEST ANY (VOTE Agent[{:02d}])","ESTIMATE Agent[{:02d}] WEREWOLF","VOTE Agent[{:02d}]","REQUEST ANY (DIVINATION Agent[{:02d}])"]
 
-        # if(day_no == 1):
-
-        #     # first_sentece = "COMINGOUT Agent[{:02d}] SEER".format(myid)
-        #     logging.debug("The day number is {}".format(day_no))
-        #     return first_sentece.format(hate)
-        
-        # else:
-        logging.debug("The day number is {}".format(day_no))
-        return strategytwo_sentences[randint(0,2)].format(hate)
+        # logging.debug("The day number is {}".format(day_no))
+        return strategytwo_sentences[randint(0,3)].format(hate)
 
 
