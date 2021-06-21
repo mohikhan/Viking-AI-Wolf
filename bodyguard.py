@@ -1,11 +1,11 @@
 from Viking import *
 
-#Update function for the bodyguard
+# Update function for the bodyguard
 def bodyguard_update(base_info,diff_data,request,player_total,player_score,myid,vulnerability):
 
     logging.debug("# BODYGUARD UPDATE")
 
-    #Reduce the score of dead players
+    # Reduce the score of dead players
     if (request == "DAILY_INITIALIZE"):
         for i in range(player_total):
             if (base_info["statusMap"][str(i+1)] == "DEAD"):
@@ -55,7 +55,7 @@ def bodyguard_update(base_info,diff_data,request,player_total,player_score,myid,
                 vulnerability[voter - 1] -=200
 
 
-       # I will also reduce the vulnerability to avoid guarding enemy agents###############################################
+       # I will also reduce the vulnerability to avoid guarding enemy agents ###############################################
 
         elif (type == "talk" and "[{:02d}]".format(myid) in text):
             
@@ -69,56 +69,45 @@ def bodyguard_update(base_info,diff_data,request,player_total,player_score,myid,
 
                 vulnerability[source-1] += 60
 
-               #Reduce the hate points for the players who wants the bodyguard to guard me
+            #Reduce the hate points for the players who wants the bodyguard to guard me
             elif "(GUARD Agent[{:02d}])".format(myid) in text:
                 player_score[source - 1] -= 40
 
                 vulnerability[source-1] += 40
             
-            #Increase the hate points for the agent who divines me as a werewolf 
-            #Also this agent is guaranteed werewolf because he wrongly divines me as a werewolf as I am avillager
+            # Increase the hate points for the agent who divines me as a werewolf 
+            # Also this agent is guaranteed werewolf because he wrongly divines me as a werewolf as I am in villager team
             elif "DIVINED Agent[{:02d}] WEREWOLF".format(myid)  in text:
                 player_score[source - 1] +=50 
 
                 vulnerability[source-1] -= 50
             
-            #Reduce the hate points for the players who estimate me in the human team
+            # Reduce the hate points for the players who estimate me in the human team
             elif "ESTIMATE Agent[{:02d}] VILLAGER".format(myid) in text or "ESTIMATE Agent[{:02d}] SEER".format(myid) in text or "ESTIMATE Agent[{:02d}] MEDIUM".format(myid) in text or "ESTIMATE Agent[{:02d}] BODYGUARD".format(myid) in text:
                 player_score[source - 1] -=50 
 
                 vulnerability[source-1] += 50
             
-            #Increase the hate points of the players who estimate me in the werewolf team
+            # Increase the hate points of the players who estimate me in the werewolf team
             elif "ESTIMATE Agent[{:02d}] WEREWOLF".format(myid) in text or "ESTIMATE Agent[{:02d}] POSSESSED".format(myid) in text:
                 player_score[source - 1] +=50 
 
                 vulnerability[source-1] -= 50
 
-            #Increase hate points if someone wants to vote for me or asks someone to vote for me 
+            # Increase hate points if someone wants to vote for me or asks someone to vote for me 
             elif "VOTE Agent[{:02d}]".format(myid) in text:
                 player_score[source - 1] +=70
 
                 vulnerability[source-1] -= 70
 
 
-
-def bodyguard_talk(hate,ally,ind):
+# talk function for bodyguard role 
+def bodyguard_talk(hate,ind):
 
     logging.debug("# TALK")
     
-    
-
-    #Taking help from allies
-    # allysentence0 = ["REQUEST Agent[{:02d}] (VOTE Agent[{:02d}])", "REQUEST ANY (GUARD Agent[{:02d}])" ,"ESTIMATE AGENT[]"]
-    
-    #sentences for the players i hate
     hatesentence = [
     "REQUEST ANY (VOTE Agent[{:02d}])", "ESTIMATE Agent[{:02d}] WEREWOLF","VOTE Agent[{:02d}]","REQUEST ANY (DIVINATION Agent[{:02d}])"
     ]
-    
-    # if(ind%4 == 0):
-
-    #     return allysentence[]
-
 
     return hatesentence[randint(0,3)].format(hate)
