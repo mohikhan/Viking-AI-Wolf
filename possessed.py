@@ -4,7 +4,7 @@ from Viking import *
 # hostile to me then I will try to gain his confidence that i am not a werewolf and a negative role for which
 # I have voted for the most hated agent 
 
-#Update function for the villager
+# Update function for the possessed
 def possessed_update(base_info,diff_data,request,player_total,player_score,myid):
     
     logging.debug("# POSSESSED UPDATE")
@@ -35,11 +35,11 @@ def possessed_update(base_info,diff_data,request,player_total,player_score,myid)
             source = getattr(row,"agent")
             logging.debug("Sentence containing me: {}".format(text))
             
-            #Reduce the hate points for the players who think I am a human
+            # Reduce the hate points for the players who think I am a human
             if "DIVINED Agent[{:02d}] HUMAN".format(myid)  in text:
                 player_score[source - 1] -=20
 
-            #Reduce the hate points for the players who wants the bodyguard to guard me
+            # Reduce the hate points for the players who wants the bodyguard to guard me
             elif "(GUARD Agent[{:02d}])".format(myid) in text:
                 player_score[source - 1] -= 40
             
@@ -59,8 +59,9 @@ def possessed_update(base_info,diff_data,request,player_total,player_score,myid)
             elif "VOTE Agent[{:02d}]".format(myid) in text:
                 player_score[source - 1] +=70
         
-        # else
+        # else (for any other pattern)
 
+# talk function for the possessed
 def possessed_talk(hate, strategy_no, day_no, myid, ind):
 
     logging.debug("# POSSESSED TALK")
@@ -75,12 +76,6 @@ def possessed_talk(hate, strategy_no, day_no, myid, ind):
     logging.debug("Strategy followed is {}".format(strategy_no))
 
     # First strategy#######################################
-
-    sentence = [
-     "REQUEST ANY (VOTE Agent[{:02d}])",
-     "ESTIMATE Agent[{:02d}] WEREWOLF",
-     "VOTE Agent[{:02d}]",
-      ]
 
     if(strategy_no == 0 ):
         
