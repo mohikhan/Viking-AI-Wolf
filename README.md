@@ -1,5 +1,5 @@
 # Viking agent for AI Wolf
-This repo contains my agent "Viking" to play the AI Wolf. Viking will participate in the 3rd international AI Wolf contest to be held in 2021.
+This repo contains my agent "Viking" to play the AI Wolf. Viking will participate in the [3rd international AI Wolf contest](http://aiwolf.org/en/3rd-international-aiwolf-contest) to be held in 2021.
 <!-- 
 ![Viking](https://user-images.githubusercontent.com/46248768/122360495-0e6b4880-cf74-11eb-8d45-cdd57dde86b2.gif) -->
 <!-- <img src="/Viking.gif" width="250" height="250"/> -->
