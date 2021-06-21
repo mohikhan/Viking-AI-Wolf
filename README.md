@@ -21,7 +21,7 @@ For a video tutorial of this game please please refer to [this](https://www.yout
 
 # Viking strategy
 
-For the detailed strategy of Viking please refer to [this](https://github.com/mohikhan/Viking-AI-Wolf/blob/main/Viking%20description.pdf).
+For the detailed strategy of Viking please refer to [this](https://github.com/mohikhan/Viking-AI-Wolf/blob/main/Description/Viking%20description.pdf).
 
 # Tutorial to create your agent
 
