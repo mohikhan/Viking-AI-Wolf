@@ -1,5 +1,5 @@
 
-#Script file
+#Script file for agent Viking
 
 from __future__ import print_function, division
 import aiwolfpy
@@ -60,14 +60,15 @@ class Myagent(object):
         #Increased my vulnerable score to avoid guarding myself
         self.vulnerability[self.myid-1] = -10000
         
+        #show diff data
         logging.debug("Diff Data:")
         logging.debug(diff_data)
         
         # the hate attribute contains the player ID that I hate the most.
         self.hate = self.player_score.index(max(self.player_score)) + 1
 
-        # the ally attribute contains the player ID that considers me a villager 
-        self.ally = self.player_score.index(min(self.player_score)) + 1
+        # # the ally attribute contains the player ID that considers me a villager 
+        # self.ally = self.player_score.index(min(self.player_score)) + 1
          
         # the vulnerable attribute contains the player ID I have to guard as a bodyguard
         self.vulnerable = self.vulnerability.index( max(self.vulnerability)  ) + 1
@@ -127,19 +128,20 @@ class Myagent(object):
 
         # logic if agent is seer
         else:
-            # default_update(base_info,diff_data,request,self.player_total,self.player_score,self.myid)
+
             seer_update(base_info,diff_data,request,self.player_total,self.player_score,self.myid)
 
 
         # Hate score of different agents
         self.hate = self.player_score.index(max(self.player_score)) + 1
         logging.debug("Hate Score: "+", ".join(str(x) for x in self.player_score))
-
+ 
+        # Vulnerability score of different agents
         self.vulnerable = self.vulnerability.index(max(self.vulnerability)) + 1
         logging.debug("Vulnerability Score: "+", ".join(str(y) for y in self.vulnerability))
      
-        # the ally attribute contains the player ID that considers me a villager 
-        self.ally = self.player_score.index(min(self.player_score)) + 1
+        # # the ally attribute contains the player ID that considers me a villager 
+        # self.ally = self.player_score.index(min(self.player_score)) + 1
     
     # Start of the day (no return)
     def dayStart(self):
@@ -154,7 +156,7 @@ class Myagent(object):
 
         # Calls talk logic for VILLAGER
         if(self.myrole == "VILLAGER"):
-            return villager_talk(self.hate,self.ally,self.ind)
+            return villager_talk(self.hate,self.ind)
         
         # Calls talk logic for WEREWOLF
         elif(self.myrole == "WEREWOLF"):
@@ -164,7 +166,7 @@ class Myagent(object):
         # Calls talk logic for BODYGUARD
         elif(self.myrole == "BODYGUARD"):
           
-            return bodyguard_talk(self.hate,self.ally,self.ind)
+            return bodyguard_talk(self.hate,self.ind)
  
         # Calls talk logic for SEER
         elif(self.myrole == "SEER"):
