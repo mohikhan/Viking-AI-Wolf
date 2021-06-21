@@ -9,8 +9,20 @@ This repo contains my agent "Viking" to play the AI Wolf. Viking will participat
 </p>
 
 
-If you have any questions or suggestion please contact me at [mkhan42@myamu.ac.in](mailto:mkhan42@myamu.ac.in)
+If you have any questions or suggestions please contact me at [mkhan42@myamu.ac.in](mailto:mkhan42@myamu.ac.in)
+
+# AI Wolf Introduction
+
+AI Wolf is a social and incomplete information game which models a conflict between an uninformed majority(Villagers) and informed minority(Werewolves). It is a communication
+game that requires several AI technologies such as multi-agent coordination, intentional reading and understanding of the theory of mind. The game takes place in alternating
+phases during day and night. In the daytime there is a discussion between all the players to eliminate the Werewolves in their society whereas in the night time the Werewolves attack the villagers to eliminate them through voting. The eliminated player cannot proceed forward in the game. There are different roles in the Townsfolk team(ex. Seer, BodyGuard etc) and Werewolves team(Werewolf, Possessed).The winning condition for the majority is to eliminate all the Werewolves whereas for the minority is to eliminate the villagers or be in equal numbers with them.
+
+For a video tutorial of this game please please refer to [this](https://www.youtube.com/watch?v=MUXrUR9DmMM)
 
 # Viking strategy
 
-For a detailed strategy of Viking please refer to [this](https://github.com/mohikhan/Viking-AI-Wolf/blob/main/Viking%20description.pdf).
+For the detailed strategy of Viking please refer to [this](https://github.com/mohikhan/Viking-AI-Wolf/blob/main/Viking%20description.pdf).
+
+# Tutorial to create your agent
+
+If you want to try your hands on this amazing game please refer to this [youtube video](https://www.youtube.com/watch?v=gavJtpRH9bw). The video explains to create your own simple agent following basic strategies.
