@@ -1,6 +1,6 @@
 from Viking import *
 
-#Update function for the seer
+# Update function for the medium
 def medium_update(base_info,diff_data,request,player_total,player_score,myid):
 
     logging.debug("# MEDIUM UPDATE")
@@ -47,17 +47,17 @@ def medium_update(base_info,diff_data,request,player_total,player_score,myid):
             source = getattr(row,"agent")
             logging.debug("Sentence containing me: {}".format(text))
             
-            #Reduce the hate points for the players who think I am a human
+            # Reduce the hate points for the players who think I am a human
             if "DIVINED Agent[{:02d}] HUMAN".format(myid)  in text:
                 player_score[source - 1] -=20
             
 
-            #Reduce the hate points for the players who wants the bodyguard to guard me
+            # Reduce the hate points for the players who wants the bodyguard to guard me
             elif "(GUARD Agent[{:02d}])".format(myid) in text:
                 player_score[source - 1] -= 40
 
             #Increase the hate points for the agent who divines me as a werewolf 
-            #Also this agent is guaranteed werewolf because he wrongly divines me as a werewolf as I am a villager in reality
+            #Also this agent is guaranteed werewolf because he wrongly divines me as a werewolf as I am in the  villager team in reality
             elif "DIVINED Agent[{:02d}] WEREWOLF".format(myid)  in text:
                 player_score[source - 1] +=50 
             
@@ -73,7 +73,7 @@ def medium_update(base_info,diff_data,request,player_total,player_score,myid):
             elif "VOTE Agent[{:02d}]".format(myid) in text:
                 player_score[source - 1] +=70
 
-     
+# talk function for the medium
 def medium_talk(hate, day_no, myid, ind):
 
     logging.debug("# MEDIUM TALK")   
@@ -89,6 +89,10 @@ def medium_talk(hate, day_no, myid, ind):
     else:
 
         return strategyone_sentences[randint(0,3)].format(hate)
+
+
+    # Any other strategy.....
+    # ....
 
  
 
