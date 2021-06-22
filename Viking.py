@@ -13,7 +13,7 @@ from werewolf import *
 from seer import *
 from bodyguard import *
 from medium import *
-from defaultrole import *
+#from defaultrole import *
 from possessed import *
 
 #My agent name
