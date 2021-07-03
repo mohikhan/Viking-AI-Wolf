@@ -1,9 +1,10 @@
-from Viking import *
+import logging, json
+from random import randint
 
 #Update function for the werewolf
 def werewolf_update(base_info,diff_data,request,player_total,player_score,myid):
     
-    logging.debug("# WEREWOLF UPDATE")
+    # logging.debug("# WEREWOLF UPDATE")
     if (request == "DAILY_INITIALIZE"):
         for i in range(player_total):
             if (base_info["statusMap"][str(i+1)] == "DEAD"):
