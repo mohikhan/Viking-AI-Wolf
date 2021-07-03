@@ -1,4 +1,6 @@
-from Viking import *
+import logging, json
+from random import randint
+
 
 # For the possessed role I have experimented it with 2 strategies : a friendly role which means if someone is 
 # hostile to me then I will try to gain his confidence that i am not a werewolf and a negative role for which
