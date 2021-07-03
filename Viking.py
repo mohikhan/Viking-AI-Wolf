@@ -17,7 +17,7 @@ from medium import *
 from possessed import *
 
 #My agent name
-myname = 'Viking'
+myname = 'Vikings'
 
 class Myagent(object):
 
