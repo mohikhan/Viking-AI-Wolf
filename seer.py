@@ -1,4 +1,6 @@
-from Viking import *
+import logging, json
+from random import randint
+
 
 # Update function for the seer
 def seer_update(base_info,diff_data,request,player_total,player_score,myid):
