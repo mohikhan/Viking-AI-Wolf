@@ -9,7 +9,7 @@ This repo contains my agent "Viking" to play the AI Wolf. Viking will participat
 </p>
 
 
-If you have any questions or suggestions please contact me at [mkhan42@myamu.ac.in](mailto:mkhan42@myamu.ac.in)
+If you have any questions or suggestions please contact me at [mohiudde@buffalo.edu](mailto:mohiudde@buffalo.edu) or [mkhan42@myamu.ac.in](mailto:mkhan42@myamu.ac.in)
 
 # AI Wolf Introduction
 
